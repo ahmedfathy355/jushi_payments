@@ -20,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter_offline/flutter_offline.dart';
 
 
 class WalletHome extends StatefulWidget {
@@ -197,6 +196,31 @@ class _WalletHomeState extends State<WalletHome> {
                           {
                             return _sc();
                           }
+                          else if(snapshot.connectionState == ConnectionState.none)
+                            {
+                              //      return Scaffold(
+
+                              return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+
+                                    children: <Widget>[
+                                      Image.asset("assets/images/lostconnection.png"),
+                                      Text(
+                                        getTranslated(context, "ConnectivityResult.none"),
+                                        style: TextStyle(
+                                          fontFamily: 'Circular Std Medium',
+                                          fontSize: 18,
+                                          color: const Color(0xff8851F1),
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  )
+                              );
+
+                            }
                           else
                           {
                             return Center(child: CircularProgressIndicator(),);
@@ -893,7 +917,7 @@ class _WalletHomeState extends State<WalletHome> {
                 ],
               ),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TransfareBalance(connectionStatus: _connectionStatus,) ));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TransfareBalance(connectionStatus: _connectionStatus,) ));
               },
             ),
 
@@ -980,7 +1004,6 @@ class _WalletHomeState extends State<WalletHome> {
       prefs.setString("txt_Emp_Password", null);
       prefs.setString("Name", null);
       prefs.setBool("Login", false);
-      prefs.commit();
     });
   }
 

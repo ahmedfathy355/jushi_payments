@@ -64,21 +64,21 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
-    - assets/images/deposit.svg
-    - assets/images/choices.svg
-    - assets/images/gear.svg
+    - assets/icon/logo.png
+    - assets/icon/logo_128.png
     - assets/images/atm.svg
+    - assets/images/cafe.svg
+    - assets/images/cafe1.svg
+    - assets/images/choices.svg
+    - assets/images/city.jpg
+    - assets/images/deposit.svg
+    - assets/images/gear.svg
+    - assets/images/lostconnection.png
     - assets/images/money.svg
-    - assets/images/transaction.svg
     - assets/images/open-menu.svg
     - assets/images/supermarket.svg
     - assets/images/supermarket1.svg
-    - assets/images/cafe.svg
-    - assets/images/cafe1.svg
-    - assets/images/logo.png
-    - assets/images/lostconnection.png
-    - assets/icon/logo.png
+    - assets/images/transaction.svg
 
     - lib/utility/Localizations/lang/en.json
     - lib/utility/Localizations/lang/ar.json

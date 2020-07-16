@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'package:JushiPayments/finance/WalletHome.dart';
 import 'package:JushiPayments/modle/EmpAccount.dart';
 import 'package:JushiPayments/modle/EmpRegistration.dart';
 import 'package:JushiPayments/modle/TodayBalance.dart';
@@ -440,7 +440,7 @@ Widget _body(){
 //          txt_transfaredAmount = "";
 //          txt_Emp_Password = "";
 //        });
-        Navigator.pop(context);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WalletHome(EmpName: prefs.getString("Name")) ));
       }
       else{
         setState(() {
