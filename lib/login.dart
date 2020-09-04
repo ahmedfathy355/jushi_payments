@@ -29,9 +29,9 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   SharedPreferences prefs;
   bool _secureText = true;
-  static Pattern Password_pattern =  r'(^(?:[+0]9)?[0-9]{3,12}$)';
+  static Pattern Password_pattern =  r'(^(?:[+0]9)?[0-9]{1,12}$)';
   //static Pattern Password_pattern =  r'^(?=.*?[0-9]).{8,}$';
-  static Pattern Code_pattern =  r'(^(?:[+0]9)?[0-9]{4,5}$)';
+  static Pattern Code_pattern =  r'(^(?:[+0]9)?[0-9]{1,12}$)';
   RegExp regex_pass = new RegExp(Password_pattern);
   RegExp regex_code = new RegExp(Code_pattern);
   final Controller_EmpCode = TextEditingController();
