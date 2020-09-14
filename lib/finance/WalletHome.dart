@@ -11,6 +11,7 @@ import 'package:JushiPayments/utility/Setting_ui/languages_screen.dart';
 import 'package:JushiPayments/utility/Setting_ui/settings_list.dart';
 import 'package:JushiPayments/utility/Setting_ui/settings_section.dart';
 import 'package:JushiPayments/utility/Setting_ui/settings_tile.dart';
+import 'package:JushiPayments/utility/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -199,7 +200,6 @@ class _WalletHomeState extends State<WalletHome> {
                           else if(snapshot.connectionState == ConnectionState.none)
                             {
                               //      return Scaffold(
-
                               return Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -252,8 +252,20 @@ class _WalletHomeState extends State<WalletHome> {
     return  SingleChildScrollView(
       child: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            //lastUpdate Bar
+            Utils.StatusCode!=200 ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Container(
+                    color: Colors.red,
+                    child: Text("Server Ofline , Last Update " + DateTime.now().year.toString() + "-" +DateTime.now().month.toString() + "-"+ (DateTime.now().day-1).toString() ,style: TextStyle(backgroundColor: Colors.red,color: Colors.white),),
+                  ),
+                )
+              ],
+            ) : Container(),
             //Name + settings icon
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -530,10 +542,11 @@ class _WalletHomeState extends State<WalletHome> {
               ],
             ),
 
-            SizedBox(height:15 ,),
+            SizedBox(height:5 ,),
             
             //text Last Records Overview
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
               width: MediaQuery.of(context).size.width - 40,
               child: Text(
                 getTranslated(context, 'Month_Records_Overview'),
@@ -545,7 +558,7 @@ class _WalletHomeState extends State<WalletHome> {
               ),
             ),
 
-            SizedBox(height:10 ,),
+            SizedBox(height:5 ,),
             //////////////////////////////////////////////////////////////////////////////////
             //rectangle 1
             //Payments
@@ -1098,8 +1111,6 @@ class _WalletHomeState extends State<WalletHome> {
         break;
     }
   }
-
-
 
 
 }

@@ -31,6 +31,7 @@
   "Enter_Employee_Code_To_Send_Mony" : "輸入員工代碼以匯款",
   "Transfer_To_Code" : "轉移到員工代碼",
   "Employee_Code_is_required" : "員工代碼為必填項",
+  "Employee_Code" : "員工守則",
   "Enter_valid_Employee_Code" : "輸入有效的員工代碼",
   "Employee_Password_is_required" : "員工密碼為必填項",
   "Enter_valid_password" : "輸入有效密碼",
@@ -41,5 +42,7 @@
   "Save": "保存",
   "Error_Check_Server": "錯誤，請檢查服務器",
   "Password_does_not_match": "密碼不匹配",
-  "Forgot_password": "忘記密碼"
+  "Forgot_password": "忘記密碼",
+  "Login": "登錄",
+  "Remember_me": "記得我"
 }

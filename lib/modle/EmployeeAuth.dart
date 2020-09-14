@@ -28,17 +28,14 @@ class EmployeeAuth {
 }
 
 Future<List<EmployeeAuth>> ValidateLogin(http.Client client , int EmpID , String Password) async {
-
-  final response =  await client.get(Utils.restURL + "EmployeeAuth?EmpID=$EmpID&Password=$Password");
-
+  final streamedRest =  await client.get(Utils.restURL + "EmployeeAuth?EmpID=$EmpID&Password=$Password");
+  Utils.StatusCode = streamedRest.statusCode;
   // Use the compute function to run parsePhotos in a separate isolate.
-  return compute(parseEmployeeAcc, "["+response.body+"]");
-
+  return compute(parseEmployeeAcc, "["+streamedRest.body+"]");
 }
 
 List<EmployeeAuth> parseEmployeeAcc(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<Object, dynamic>>();
-
   return parsed.map<EmployeeAuth>((json) => EmployeeAuth.fromJson(json)).toList();
 }
 

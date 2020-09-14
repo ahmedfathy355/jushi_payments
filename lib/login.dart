@@ -10,6 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import 'utility/utils.dart';
+
 class Login extends StatefulWidget {
 
   @override
@@ -57,27 +59,16 @@ class _LoginState extends State<Login> {
       _list =  await ValidateLogin(http.Client() , int.parse(txt_Emp_ID) , txt_Emp_Password );
       if( _list[0].EmpID != null && _list.length > 0) {
         if (_rememberMeFlag) {
-          savePref(
-              int.parse(txt_Emp_ID), txt_Emp_Password, _list[0].Name, true);
+          savePref(int.parse(txt_Emp_ID), txt_Emp_Password, _list[0].Name, true);
           IsLoadind = true;
           loginToast("Login Success");
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => WalletHome(EmpName: _list[0].Name)));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WalletHome(EmpName: _list[0].Name)));
         }
         else if(_rememberMeFlag == false)
         {
           IsLoadind = true;
           loginToast("Success");
-          Navigator.pushReplacement(context, MaterialPageRoute(
-              builder: (context) => WalletHome(EmpName: _list[0].Name)));
-        }
-        else {
-          IsLoadind = false;
-          setState(() {
-            ShowIndicator = false;
-          });
-
-          loginToast("Error");
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WalletHome(EmpName: _list[0].Name)));
         }
       }
       else if (_list[0].EmpID == null ){
@@ -92,15 +83,16 @@ class _LoginState extends State<Login> {
         setState(() {
           ShowIndicator = false;
         });
-        loginToast("Check");
+        loginToast("Check Code Or Password");
       }
     }
     catch(e)
     {
+      loginToast("Server Offline" + e);
       setState(() {
         ShowIndicator = false;
       });
-      loginToast("Error");
+      loginToast("Error " + e);
     }
   }
 //      showDialog(
@@ -225,6 +217,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
+
                 Container(
                   padding: EdgeInsets.only(bottom: 20),
                   width: MediaQuery.of(context).size.width,
@@ -266,18 +259,18 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             prefixIcon: Icon(Icons.person , color: const Color(0xff2e77ae),) ,
-                            hintText: 'Employee Code',
+                            hintText: getTranslated(context, "Employee_Code") ,
                             hintStyle: TextStyle(color: Colors.grey[400]),
                           ),
                           onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Employee Code is required.';
+                              return getTranslated(context, "Employee_Code_is_required") ;
                             }
                             else{
                               txt_Emp_ID = value ;
                               if (!regex_code.hasMatch(value))
-                                return 'Enter valid Employee Code';
+                                return getTranslated(context, "Enter_valid_Employee_Code") ;
                               else
                                 return null;
                             }
@@ -312,17 +305,17 @@ class _LoginState extends State<Login> {
                                   : Icons.visibility),
                             ),
                             prefixIcon: Icon(Icons.lock , color: const Color(0xff2e77ae),) ,
-                            hintText: 'Password',
+                            hintText: getTranslated(context, "Password") ,
                             hintStyle: TextStyle(color: Colors.grey[400]),
                           ),
                           onFieldSubmitted:(_) => FocusScope.of(context).unfocus(),
                           validator: (value){
                             if(value.isEmpty)
-                            {return 'Employee Password is required.';}
+                            {return getTranslated(context, "Employee_Password_is_required") ;}
                             else{
                               txt_Emp_Password = value ;
                               if (!regex_pass.hasMatch(value))
-                                return 'Enter valid password';
+                                return  getTranslated(context, "Enter_valid_password") ;
                               else
                                 return null;
                             }
@@ -344,7 +337,7 @@ class _LoginState extends State<Login> {
                               }),
                             ),
                             new Text(
-                              'Remember me',
+                              getTranslated(context, "Remember_me"),
                               style: TextStyle(
                                 fontFamily: 'Roboto',
                                 fontSize: 12,
@@ -371,8 +364,21 @@ class _LoginState extends State<Login> {
 
                             check();
                           },
-                          child:  ShowIndicator ? CircularProgressIndicator() : Text(
-                            'Login',
+                          child: Utils.StatusCode!=200 ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text("Server Offline ",
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 24,
+                                    color: Colors.amberAccent,
+                                  ),
+                                  textAlign: TextAlign.left,),
+                              )
+                            ],
+                          ) :  ShowIndicator ? CircularProgressIndicator() : Text(
+                            getTranslated(context, 'Login'),
                             style: TextStyle(
                               fontFamily: 'Roboto',
                               fontSize: 24,
@@ -388,6 +394,7 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                 ),
+
                 SizedBox(height: 15,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

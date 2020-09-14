@@ -31,6 +31,7 @@
   "Enter_Employee_Code_To_Send_Mony" : "أدخل رمز الموظف لإرسال الأموال",
   "Transfer_To_Code" : "نقل إلى كود الموظف",
   "Employee_Code_is_required" : "أدخل كود الموظف",
+  "Employee_Code" : "كود الموظف",
   "Enter_valid_Employee_Code" : "تاكد من رمز الموظف",
   "Employee_Password_is_required" : "كلمة مرور الموظف مطلوبة",
   "Enter_valid_password" : "أدخل كلمة مرور صالحة",
@@ -41,5 +42,7 @@
   "Save": "حفظ",
   "Error_Check_Server": "خطأ ، يرجى التحقق من الخادم",
   "Password_does_not_match": "كلمة السر غير متطابقة",
-  "Forgot_password": "هل نسيت كلمة المرور"
+  "Forgot_password": "هل نسيت كلمة المرور",
+  "Login": "تسجيل دخول",
+  "Remember_me": "تذكرنى"
 }

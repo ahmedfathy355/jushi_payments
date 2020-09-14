@@ -31,6 +31,7 @@
   "Enter_Employee_Code_To_Send_Mony" : "Enter Employee Code To Send Mony",
   "Transfer_To_Code" : "Transfer To Employee Code",
   "Employee_Code_is_required" : "Employee Code is required",
+  "Employee_Code" : "Employee Code",
   "Enter_valid_Employee_Code" : "Enter valid Employee Code",
   "Employee_Password_is_required" : "Employee Password is required",
   "Enter_valid_password" : "Enter valid password",
@@ -41,6 +42,8 @@
   "Save": "Save",
   "Error_Check_Server": "Error, Please Check Server",
   "Password_does_not_match": "Password does not match",
-  "Forgot_password": "Forgot password"
+  "Forgot_password": "Forgot password",
+  "Login": "Login",
+  "Remember_me": "Remember me"
 
 }

@@ -56,12 +56,24 @@ Future<List<TodayBalance>> fetchTotalsByID(http.Client client , int id ,bool Con
   if (file != null && await file.exists() && !Conniction_Status ) {
     var res = await file.readAsString();
     var jsonResponse  = json.decode(res).cast<Map<Object, dynamic>>();
+    Utils.StatusCode = 400;
     return jsonResponse.map<TodayBalance>((json) => TodayBalance.fromJson(json)).toList();
   }
   else{
-    final response =  await client.get(Utils.restURL + "today?id=$id");
-    var jsonResponse  = response.body;
-    return compute(parseEmployeeAcc, jsonResponse);
+
+    try{
+      final streamedRest =  await client.get(Utils.restURL + "today?id=$id");
+      Utils.StatusCode = streamedRest.statusCode;
+      var jsonResponse  = streamedRest.body;
+      return compute(parseEmployeeAcc, jsonResponse);
+    }
+    catch(e)
+    {
+      var res = await file.readAsString();
+      var jsonResponse  = json.decode(res).cast<Map<Object, dynamic>>();
+      Utils.StatusCode = 400;
+      return jsonResponse.map<TodayBalance>((json) => TodayBalance.fromJson(json)).toList();
+    }
   }
 }
 

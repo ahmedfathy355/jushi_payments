@@ -11,7 +11,7 @@ description: payments card balance
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.0
+version: 3.0.0
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -39,7 +39,7 @@ dependencies:
   path_provider: ^1.6.11
   flutter_cache_manager: ^1.4.1
   flutter_multi_carousel: ^1.0.0
-
+  ping_discover_network: ^0.2.0+1
 
 dev_dependencies:
   flutter_test:
