@@ -9,6 +9,7 @@ class EmployeeAuth {
   final String Dept;
   final String Position;
   final String Password;
+  final String mob;
 
   EmployeeAuth({
     this.EmpID,
@@ -16,6 +17,7 @@ class EmployeeAuth {
     this.Dept,
     this.Position,
     this.Password,
+    this.mob,
   });
 
   factory EmployeeAuth.fromJson(Map<Object, dynamic> json) => EmployeeAuth(
@@ -24,11 +26,12 @@ class EmployeeAuth {
     Dept:  json["Dept"],
     Position: json["Position"],
     Password: json["Password"],
+    mob: json["mob"]
   );
 }
 
 Future<List<EmployeeAuth>> ValidateLogin(http.Client client , int EmpID , String Password) async {
-  final streamedRest =  await client.get(Utils.restURL + "EmployeeAuth?EmpID=$EmpID&Password=$Password");
+  final streamedRest =  await client.get(Utils.restURL + "EmployeeAuth?EmpID=$EmpID&Password=$Password" , headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
   Utils.StatusCode = streamedRest.statusCode;
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseEmployeeAcc, "["+streamedRest.body+"]");

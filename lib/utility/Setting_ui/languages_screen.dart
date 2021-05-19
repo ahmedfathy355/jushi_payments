@@ -35,6 +35,12 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
     super.initState();
   }
 
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {

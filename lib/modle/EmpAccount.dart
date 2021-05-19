@@ -40,7 +40,7 @@ class EmpAccount{
 }
 
 Future<List<EmpAccount>> fetchEmployeeAccByID(http.Client client , String id) async {
-  final response =  await client.get(Utils.restURL + "EmpAccount?id=$id");
+  final response =  await client.get(Utils.restURL + "EmpAccount?id=$id", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseEmployeeAcc, "["+response.body+"]");
 }
@@ -48,7 +48,7 @@ Future<List<EmpAccount>> fetchEmployeeAccByID(http.Client client , String id) as
 
 Future<List<EmpAccount>> fetchTotalBalanceByID(http.Client client , String id) async {
 
-  final response =  await client.get(Utils.restURL + "EmpAccount/$id");
+  final response =  await client.get(Utils.restURL + "EmpAccount/$id", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseEmployeeAcc, response.body);
@@ -56,7 +56,7 @@ Future<List<EmpAccount>> fetchTotalBalanceByID(http.Client client , String id) a
 
 Future<List<EmpAccount>> fetchAllEmployeeAcc(http.Client client) async {
 
-  final response =  await client.get(Utils.restURL + "EmpAccount");
+  final response =  await client.get(Utils.restURL + "EmpAccount", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseEmployeeAcc, response.body);

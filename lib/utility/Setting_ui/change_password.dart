@@ -1,5 +1,6 @@
 
 import 'package:JushiPayments/login.dart';
+import 'package:JushiPayments/modle/EmpRegistration.dart';
 import 'package:JushiPayments/utility/Localizations/localization_constants.dart';
 import 'package:JushiPayments/utility/utils.dart';
 import 'package:flutter/material.dart';
@@ -19,17 +20,19 @@ class _change_password extends State<change_password> {
   var txt_Old_Password;
   var txt_New_Password;
   var txt_Confirm_Password;
+  var txt_mob;
 
   final c_Old_Password = new TextEditingController();
   final c_New_Password = new TextEditingController();
   final c_Confirm_Password = new TextEditingController();
+  final c_mob = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
 
 
-  static Pattern Password_pattern =  r'(^(?:[+0]9)?[0-9]{3,12}$)';
+  static Pattern Password_pattern =  r'(^(?:[+0]9)?[0-9]{1,12}$)';
   //static Pattern Password_pattern =  r'^(?=.*?[0-9]).{8,}$';
-  static Pattern Code_pattern =  r'(^(?:[+0]9)?[0-9]{4,5}$)';
+  static Pattern Code_pattern =  r'(^(?:[+0]9)?[0-9]{1,12}$)';
   RegExp regex_pass = new RegExp(Password_pattern);
   RegExp regex_code = new RegExp(Code_pattern);
   bool _secureText = true;
@@ -42,10 +45,11 @@ class _change_password extends State<change_password> {
   }
   @override
   void initState() {
-    //checkIsLogin();
+    getMobile();
     c_Old_Password.addListener(txt_Old_Password);
     c_New_Password.addListener(txt_New_Password);
     c_Confirm_Password.addListener(txt_Confirm_Password);
+
     super.initState();
   }
 
@@ -54,10 +58,25 @@ class _change_password extends State<change_password> {
     c_Old_Password.dispose();
     c_New_Password.dispose();
     c_Confirm_Password.dispose();
+    c_mob.dispose();
+    Navigator.pop(context);
     super.dispose();
   }
 
-
+  Future<String> getMobile() async{
+    try{
+      prefs = await SharedPreferences.getInstance();
+      setState(() {
+        txt_mob =   prefs.getString("mob");
+        c_mob.text = txt_mob;
+      });
+    }
+    catch(e)
+    {
+      print(e);
+    }
+    return txt_mob;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +93,20 @@ class _change_password extends State<change_password> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
 
-            SizedBox(height: 50,),
+            SizedBox(height: 10,),
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width - 40,
+              child: Text(
+                getTranslated(context, 'Update_Profile_Information'),
+                style: TextStyle(
+                  fontFamily: 'Circular Std Medium',
+                  fontSize: 22,
+                  color: const Color(0xff1ba111),
+                ),
+              ),
+            ),
+
 
             Form(
               key: _formKey,
@@ -94,7 +126,7 @@ class _change_password extends State<change_password> {
                     child: TextFormField(
                       controller: c_Old_Password,
                       keyboardType: TextInputType.number,
-                      obscureText: _secureText,
+                      obscureText: false,
                       style:TextStyle(
                         fontFamily: 'Roboto',
                         fontSize: 17,
@@ -130,7 +162,21 @@ class _change_password extends State<change_password> {
                   ),
                   SizedBox(height: 10,),
                   Divider(),
-                  SizedBox(height: 10,),
+
+                  SizedBox(height: 5,),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    width: MediaQuery.of(context).size.width - 40,
+                    child: Text(
+                      getTranslated(context, 'Enter_New_Password'),
+                      style: TextStyle(
+                        fontFamily: 'Circular Std Medium',
+                        fontSize: 18,
+                        color: const Color(0xff3a4759),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5,),
                   Container(
                     width: MediaQuery.of(context).size.width - 40,
                     decoration: BoxDecoration(
@@ -223,6 +269,58 @@ class _change_password extends State<change_password> {
                     ),
                   ),
                   SizedBox(height: 15,),
+
+
+                  Divider(),
+
+                  SizedBox(height: 5,),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    width: MediaQuery.of(context).size.width - 40,
+                    child: Text(
+                      getTranslated(context, 'Mobile'),
+                      style: TextStyle(
+                        fontFamily: 'Circular Std Medium',
+                        fontSize: 18,
+                        color: const Color(0xff3a4759),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5,),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: const Color(0xffffffff),
+                        border: Border.all(width: 0.1,color: const Color(0xff0d2137))
+                    ),
+                    child: TextFormField(
+                      controller: c_mob,
+
+                      keyboardType: TextInputType.phone,
+                      style:TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 17,
+                        color: const Color(0xff0d2137),
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        suffixIcon: IconButton(
+                          onPressed: showHide,
+                          icon: Icon(Icons.phone),
+                        ),
+                        prefixIcon: Icon(Icons.lock , color: const Color(0xffFF958F),) ,
+                        hintText: getTranslated(context, 'Mobile'),
+                        hintStyle: TextStyle(color: Colors.grey[400]),
+                      ),
+                      onFieldSubmitted:(_) => FocusScope.of(context).unfocus(),
+                      validator: (value) {
+                        txt_mob = value;
+                      },
+                    ),
+                  ),
+
+
                   MaterialButton(
                     child: Container(
                         height: 62,
@@ -263,17 +361,24 @@ class _change_password extends State<change_password> {
 
   bool _isUpdated = false;
 
-  Future _updatePassword(  String Pass ) async {
+  Future _updatePassword(  String Pass  ) async {
     prefs = await SharedPreferences.getInstance();
     int EmpID = prefs.getInt("txt_Emp_ID")  ;
-    var get_response = await http.put(Utils.restURL + "EmpRegistration/$EmpID", body: { "PasswordStored": '$Pass'});
+    String mob = txt_mob.toString() ?? "" ;
+    var get_response = await http.put(Utils.restURL + "EmpRegistration/$EmpID", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'}, body: { "PasswordStored": '$Pass',"mob":'$mob'});
     if (get_response.statusCode == 201){
       _isUpdated = true ;
+      signOut();
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login() ));
     }
     else
       {
         _isUpdated = false;
+            setState(() {
+              txt_Confirm_Password = getTranslated(context, 'Error_Check_Server');
+            });
       }
+
   }
 
   signOut() async {
@@ -283,6 +388,7 @@ class _change_password extends State<change_password> {
       prefs.setString("txt_Emp_Password", null);
       prefs.setString("Name", null);
       prefs.setBool("Login", false);
+      prefs.setString("Mobile", null);
     });
   }
 
@@ -292,18 +398,6 @@ class _change_password extends State<change_password> {
       form.save();
       if(txt_Confirm_Password == txt_New_Password){
         _updatePassword( txt_Confirm_Password );
-        if( _isUpdated)
-          {
-            signOut();
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login() ));
-          }
-        else
-          {
-            setState(() {
-              txt_Confirm_Password = getTranslated(context, 'Error_Check_Server');
-            });
-          }
-
       }
       else{
         setState(() {

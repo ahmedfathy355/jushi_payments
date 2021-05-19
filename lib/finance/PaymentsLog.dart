@@ -65,6 +65,12 @@ class _PaymentsLog extends State<PaymentsLog> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    Navigator.pop(context);
+  }
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(

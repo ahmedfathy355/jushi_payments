@@ -58,8 +58,9 @@ class _LoginState extends State<Login> {
     try{
       _list =  await ValidateLogin(http.Client() , int.parse(txt_Emp_ID) , txt_Emp_Password );
       if( _list[0].EmpID != null && _list.length > 0) {
+
         if (_rememberMeFlag) {
-          savePref(int.parse(txt_Emp_ID), txt_Emp_Password, _list[0].Name, true);
+          savePref(int.parse(txt_Emp_ID), txt_Emp_Password, _list[0].Name, true,_list[0].mob);
           IsLoadind = true;
           loginToast("Login Success");
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WalletHome(EmpName: _list[0].Name)));
@@ -67,9 +68,10 @@ class _LoginState extends State<Login> {
         else if(_rememberMeFlag == false)
         {
           IsLoadind = true;
-          loginToast("Success");
+          loginToast("Login Success");
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WalletHome(EmpName: _list[0].Name)));
         }
+        txt_Emp_ID == txt_Emp_Password ? Utils.NeedChangePassword = true :Utils.NeedChangePassword = false;
       }
       else if (_list[0].EmpID == null ){
         IsLoadind = false;
@@ -123,13 +125,14 @@ class _LoginState extends State<Login> {
         textColor: Colors.white);
   }
 
-  savePref(int txt_Emp_ID, String txt_Emp_Password, String Name, bool Login) async {
+  savePref(int txt_Emp_ID, String txt_Emp_Password, String Name, bool Login,String mob) async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       prefs.setInt("txt_Emp_ID", txt_Emp_ID);
       prefs.setString("txt_Emp_Password", txt_Emp_Password);
       prefs.setString("Name", Name);
       prefs.setBool("Login", Login);
+      prefs.setString("mob", mob ?? "");
       prefs.commit();
     });
   }
@@ -138,17 +141,17 @@ class _LoginState extends State<Login> {
     try
     {
       prefs= await SharedPreferences.getInstance().then((result)
-          {
-            if(result != null){
-              txt_Emp_ID = (prefs.getString('txt_Emp_ID') ?? "");
-              txt_Emp_Password = (prefs.getString('txt_Emp_Password') ?? "");
-              _rememberMeFlag = (prefs.getBool("Login") ?? false);
-              IsLoadind = _rememberMeFlag ? true : false;
-            }
-            else{
-              Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => WalletHome(EmpName:prefs.getString("Name"))    ));
-            }
-          });
+      {
+        if(result != null){
+          txt_Emp_ID = (prefs.getString('txt_Emp_ID') ?? "");
+          txt_Emp_Password = (prefs.getString('txt_Emp_Password') ?? "");
+          _rememberMeFlag = (prefs.getBool("Login") ?? false);
+          IsLoadind = _rememberMeFlag ? true : false;
+        }
+        else{
+          Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => WalletHome(EmpName:prefs.getString("Name"))    ));
+        }
+      });
     }
     catch(e)
     {
@@ -361,23 +364,24 @@ class _LoginState extends State<Login> {
                             setState(() {
                               ShowIndicator = true;
                             });
-
                             check();
                           },
-                          child: Utils.StatusCode!=200 ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: Text("Server Offline ",
-                                  style: TextStyle(
-                                    fontFamily: 'Roboto',
-                                    fontSize: 24,
-                                    color: Colors.amberAccent,
-                                  ),
-                                  textAlign: TextAlign.left,),
-                              )
-                            ],
-                          ) :  ShowIndicator ? CircularProgressIndicator() : Text(
+                          child:
+//                          Utils.StatusCode != 200 ? Row(
+//                            mainAxisAlignment: MainAxisAlignment.center,
+//                            children: [
+//                              Center(
+//                                child: Text(Utils.StatusCode.toString() + "Server Offline ",
+//                                  style: TextStyle(
+//                                    fontFamily: 'Roboto',
+//                                    fontSize: 24,
+//                                    color: Colors.amberAccent,
+//                                  ),
+//                                  textAlign: TextAlign.left,),
+//                              )
+//                            ],
+//                          ) :
+                          ShowIndicator ? CircularProgressIndicator() : Text(
                             getTranslated(context, 'Login'),
                             style: TextStyle(
                               fontFamily: 'Roboto',

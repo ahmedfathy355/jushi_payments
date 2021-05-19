@@ -52,7 +52,7 @@ Future<Response> getTotalsByEmpID(int id) async{
 
 
 Future<List<TodayBalance>> fetchTotalsByID(http.Client client , int id ,bool Conniction_Status) async {
-  var file = await MyCacheManager().getSingleFile(Utils.restURL + "today?id=$id");
+  var file = await MyCacheManager().getSingleFile(Utils.restURL + "today?id=$id", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
   if (file != null && await file.exists() && !Conniction_Status ) {
     var res = await file.readAsString();
     var jsonResponse  = json.decode(res).cast<Map<Object, dynamic>>();
@@ -62,7 +62,7 @@ Future<List<TodayBalance>> fetchTotalsByID(http.Client client , int id ,bool Con
   else{
 
     try{
-      final streamedRest =  await client.get(Utils.restURL + "today?id=$id");
+      final streamedRest =  await client.get(Utils.restURL + "today?id=$id", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
       Utils.StatusCode = streamedRest.statusCode;
       var jsonResponse  = streamedRest.body;
       return compute(parseEmployeeAcc, jsonResponse);

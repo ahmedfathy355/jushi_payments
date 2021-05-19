@@ -14,11 +14,13 @@ class EmpRegistration{
   final String PasswordStored ;
   final String Password ;
   final bool Active;
+  final String mob ;
 
   EmpRegistration({this.Serial , this.EmpID , this.Name,this.DeptID,this.Position,this.HaveApssword
       , this.PasswordStored
       , this.Password
       , this.Active
+      , this.mob
       });
 
   factory EmpRegistration.fromJson(Map<Object, dynamic> json) {
@@ -31,6 +33,7 @@ class EmpRegistration{
         HaveApssword : json["HaveApssword"]as bool,
         PasswordStored : json["PasswordStored"]as String,
         Password : json["Password"]as String,
+        mob : json["mob"]as String,
         Active : json["Active"]as bool
     );
   }
@@ -39,7 +42,7 @@ class EmpRegistration{
 
 Future<List<EmpRegistration>> fetchEmployeeByID(http.Client client , int id) async {
 
-  final response =  await client.get(Utils.restURL + "EmpRegistration?id=$id");
+  final response =  await client.get(Utils.restURL + "EmpRegistration?id=$id", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseEmployee, "["+response.body+"]");
@@ -48,7 +51,7 @@ Future<List<EmpRegistration>> fetchEmployeeByID(http.Client client , int id) asy
 
 Future<List<EmpRegistration>> fetchAllEmployee(http.Client client) async {
 
-  final response =  await client.get(Utils.restURL + "EmpRegistration");
+  final response =  await client.get(Utils.restURL + "EmpRegistration", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseEmployee, response.body);

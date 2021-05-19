@@ -36,7 +36,7 @@ class User{
 
 Future<List<User>> fetchUserByID(http.Client client,int id) async {
 
-  final response =  await client.get(Utils.restURL + "user?id=$id");
+  final response =  await client.get(Utils.restURL + "user?id=$id", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseusr, "["+response.body+"]");
@@ -44,7 +44,7 @@ Future<List<User>> fetchUserByID(http.Client client,int id) async {
 
 Future<List<User>> fetchUserAllUsers(http.Client client) async {
 
-  final response =  await client.get(Utils.restURL + "user");
+  final response =  await client.get(Utils.restURL + "user", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseusr, response.body);

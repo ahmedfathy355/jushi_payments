@@ -65,6 +65,7 @@ class _WalletHomeState extends State<WalletHome> {
     });
     initConnectivity();
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    _total();
   }
 
   @override
@@ -133,7 +134,11 @@ class _WalletHomeState extends State<WalletHome> {
                   leading: Icon(Icons.language),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) => LanguagesScreen()));
+                        builder: (BuildContext context) => LanguagesScreen())).then((value) {
+                      setState(() {
+                        _total();
+                      });
+                    });
                   },
                 ),
               ],
@@ -159,12 +164,12 @@ class _WalletHomeState extends State<WalletHome> {
         body:
         Container(
           margin: EdgeInsets.only(top: 24),
-          child: OfflineBuilder(
+          child:
+          OfflineBuilder(
             connectivityBuilder: (
                 BuildContext context,
                 ConnectivityResult connectivity,
-                Widget child,
-                ) {
+                Widget child,) {
                   final bool connected = connectivity != ConnectivityResult.none;
                   return new Stack(
                     fit: StackFit.expand,
@@ -199,7 +204,6 @@ class _WalletHomeState extends State<WalletHome> {
                           }
                           else if(snapshot.connectionState == ConnectionState.none)
                             {
-                              //      return Scaffold(
                               return Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -219,7 +223,6 @@ class _WalletHomeState extends State<WalletHome> {
                                     ],
                                   )
                               );
-
                             }
                           else
                           {
@@ -261,7 +264,7 @@ class _WalletHomeState extends State<WalletHome> {
                 Center(
                   child: Container(
                     color: Colors.red,
-                    child: Text("Server Ofline , Last Update " + DateTime.now().year.toString() + "-" +DateTime.now().month.toString() + "-"+ (DateTime.now().day-1).toString() ,style: TextStyle(backgroundColor: Colors.red,color: Colors.white),),
+                    child: Text("Server Offline , Last Update " + DateTime.now().year.toString() + "-" +DateTime.now().month.toString() + "-"+ (DateTime.now().day-1).toString() ,style: TextStyle(backgroundColor: Colors.red,color: Colors.white),),
                   ),
                 )
               ],
@@ -295,11 +298,21 @@ class _WalletHomeState extends State<WalletHome> {
 //                    ),
                   ),
                 ),
+                Utils.NeedChangePassword == true ? GestureDetector(
+                  child: Container(child: Image.asset("assets/images/notification.png"),height: 32,),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => change_password())).then((value) {
+                      setState(() {
+                        _total();
+                      });
+                    });
+                  },
+                ) : Container(),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20,5,20,0),
                   child: Text(
                     widget.EmpName.length> 20 ? widget.EmpName.substring(0,20) : widget.EmpName,
-
                     style: TextStyle(
                       fontFamily: 'Circular Std Medium',
                       fontSize: 20,
@@ -347,7 +360,6 @@ class _WalletHomeState extends State<WalletHome> {
             //Total 2 Boxes
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
               children: <Widget>[
                 //box 1
                 Container(
@@ -379,7 +391,7 @@ class _WalletHomeState extends State<WalletHome> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                    getTranslated(context, 'Payments'),
+                                    getTranslated(context, 'PaymentsToday'),
                                     style: TextStyle(
                                       fontFamily: 'Circular Std Book',
                                       fontSize:20,
@@ -389,7 +401,8 @@ class _WalletHomeState extends State<WalletHome> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(_list[0].todayPayments.toString(),
+                                    Text(
+                                        _list[0].todayPayments.toString(),
                                         style: TextStyle(
                                           fontFamily: 'Circular Std Book',
                                           fontSize: 35,
@@ -404,7 +417,11 @@ class _WalletHomeState extends State<WalletHome> {
                       ),
                     ),
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsLog(filterDateStr: "Day")));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsLog(filterDateStr: "Day"))).then((value) {
+                        setState(() {
+                          _total();
+                        });
+                      });
                     },
                   )
                 ),
@@ -465,7 +482,11 @@ class _WalletHomeState extends State<WalletHome> {
                       ),
                     ),
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RechargeLog(filterDateStr: "Day")   ));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RechargeLog(filterDateStr: "Day")   )).then((value) {
+                        setState(() {
+                          _total();
+                        });
+                      });
                     },
                   )
                 ),
@@ -680,7 +701,11 @@ class _WalletHomeState extends State<WalletHome> {
                 ],
               ),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsLog(filterDateStr: "Month")));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsLog(filterDateStr: "Month"))).then((value) {
+                  setState(() {
+                    _total();
+                  });
+                });
               },
             ),
 
@@ -804,7 +829,11 @@ class _WalletHomeState extends State<WalletHome> {
                 ],
               ),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RechargeLog(filterDateStr: "Month")));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RechargeLog(filterDateStr: "Month"))).then((value) {
+                  setState(() {
+                    _total();
+                  });
+                });
               },
             ),
 
@@ -930,7 +959,11 @@ class _WalletHomeState extends State<WalletHome> {
                 ],
               ),
               onPressed: (){
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TransfareBalance(connectionStatus: _connectionStatus,) ));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TransfareBalance(connectionStatus: _connectionStatus,) )).then((value) {
+                  setState(() {
+                    _total();
+                  });
+                });
               },
             ),
 
@@ -1017,6 +1050,7 @@ class _WalletHomeState extends State<WalletHome> {
       prefs.setString("txt_Emp_Password", null);
       prefs.setString("Name", null);
       prefs.setBool("Login", false);
+      prefs.setString("Mobile", null);
     });
   }
 

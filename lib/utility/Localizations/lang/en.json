@@ -1,5 +1,6 @@
 {
   "Payments" : "Payments" ,
+  "PaymentsToday" : "Payments Today" ,
   "Sign_in_successfully" : "Sign in successfully" ,
   "Login_Now" : "Login Now" ,
   "to_continue_your_wallet" : "to continue your wallet" ,
@@ -23,18 +24,19 @@
   "Language" : "Language",
   "Account" : "Account",
   "Password" : "Password",
+  "Current_Password" : "Current Account Password",
   "Sign_out" : "Sign out",
   "English" : "English",
   "Arabic" : "Arabic",
   "Chinese" : "Chinese",
   "Amount" : "Amount",
   "Enter_Employee_Code_To_Send_Mony" : "Enter Employee Code To Send Mony",
-  "Transfer_To_Code" : "Transfer To Employee Code",
+  "Transfer_To_Code" : "Send Money To Code",
   "Employee_Code_is_required" : "Employee Code is required",
   "Employee_Code" : "Employee Code",
   "Enter_valid_Employee_Code" : "Enter valid Employee Code",
   "Employee_Password_is_required" : "Employee Password is required",
-  "Enter_valid_password" : "Enter valid password",
+  "Enter_valid_password" : "Enter valid password, Just Numbers",
   "Current_Password": "Current Password",
   "New_password": "New password",
   "Confirm_Password": "Confirm Password",
@@ -44,6 +46,9 @@
   "Password_does_not_match": "Password does not match",
   "Forgot_password": "Forgot password",
   "Login": "Login",
-  "Remember_me": "Remember me"
+  "Remember_me": "Remember me",
+  "Enter_New_Password" : "Enter New Password",
+  "Mobile" : "Mobile",
+  "Update_Profile_Information" : "Update Profile Information"
 
 }

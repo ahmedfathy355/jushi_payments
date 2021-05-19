@@ -35,7 +35,7 @@ class getRecharge {
 
 Future<List<getRecharge>> EmployeeRecharge(http.Client client ,  String _dateFrom, String _dateTo , int  EmpID) async {
 
-  final response =  await client.get(Utils.restURL + "getRecharge?_dateFrom=$_dateFrom&_dateTo=$_dateTo&EmpID=$EmpID");
+  final response =  await client.get(Utils.restURL + "getRecharge?_dateFrom=$_dateFrom&_dateTo=$_dateTo&EmpID=$EmpID", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'});
 
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseEmployeeAcc, response.body);

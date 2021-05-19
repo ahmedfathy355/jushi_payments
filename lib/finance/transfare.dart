@@ -29,9 +29,9 @@ class _TransfareBalanceState extends State<TransfareBalance> {
   final _formKey = GlobalKey<FormState>();
   bool _isExistCode = false;
 
-  static Pattern Password_pattern =  r'(^(?:[+0]9)?[0-9]{3,12}$)';
+  static Pattern Password_pattern =  r'(^(?:[+0]9)?[0-9]{1,12}$)';
   //static Pattern Password_pattern =  r'^(?=.*?[0-9]).{8,}$';
-  static Pattern Code_pattern =  r'(^(?:[+0]9)?[0-9]{4,5}$)';
+  static Pattern Code_pattern =  r'(^(?:[+0]9)?[0-9]{1,12}$)';
   RegExp regex_pass = new RegExp(Password_pattern);
   RegExp regex_code = new RegExp(Code_pattern);
   bool _secureText = true;
@@ -56,6 +56,7 @@ class _TransfareBalanceState extends State<TransfareBalance> {
     c_To_EmpID.dispose();
     c_Emp_Password.dispose();
     c_transfaredAmount.dispose();
+    Navigator.pop(context);
     super.dispose();
   }
 
@@ -223,7 +224,7 @@ Widget _body(){
                               : Icons.visibility),
                         ),
                         prefixIcon: Icon(Icons.lock , color: const Color(0xffFF958F),) ,
-                        hintText: getTranslated(context, 'Password'),
+                        hintText: getTranslated(context, 'Current_Password'),
                         hintStyle: TextStyle(color: Colors.grey[400]),
                       ),
                       onFieldSubmitted:(_) => FocusScope.of(context).unfocus(),
@@ -371,7 +372,7 @@ Widget _body(){
 
 //  Future _insertTransfare_sql(String table_id , String ItemID , double Qty) async {
 //    var sql = "insert Into bill_items_test (tableID,ItemID, Qty) Values ('$table_id' , '$ItemID' , $Qty) ";
-//    await http.post(Utils.RestURL + "tables", body: {'TableName': 'Table 17', 'IsBooked': 'false'});
+//    await http.post(Utils.RestURL + "tables", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'}, body: {'TableName': 'Table 17', 'IsBooked': 'false'});
 //
 //    print('inserted');
 //    selecteditems.clear();
@@ -381,8 +382,8 @@ Widget _body(){
     var _Amount  = Amount * -1;
 //    var sql1 = "exec CrudTransfare  @OrderTypeID=2,@EmpID=$EmpID,@Amount=$Amount,@UserCreatID=$EmpID,@StatementType='Insert'  ";
 
-    await http.post(Utils.restURL + "EmpAccount", body: {"OrderTypeID": "2", "EmpID": "$EmpID" ,"Amount":"$_Amount","UserCreatID":"$EmpID","StatementType":"Insert"    });
-    await http.post(Utils.restURL + "EmpAccount", body: {"OrderTypeID": "2", "EmpID": "$_To_EmpID" ,"Amount":"$Amount","UserCreatID":"$EmpID","StatementType":"Insert"    });
+    await http.post(Utils.restURL + "EmpAccount", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'}, body: {"OrderTypeID": "2", "EmpID": "$EmpID" ,"Amount":"$_Amount","UserCreatID":"$EmpID","StatementType":"Insert"    });
+    await http.post(Utils.restURL + "EmpAccount", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'}, body: {"OrderTypeID": "2", "EmpID": "$_To_EmpID" ,"Amount":"$Amount","UserCreatID":"$EmpID","StatementType":"Insert"    });
     
   }
 
@@ -418,12 +419,12 @@ Widget _body(){
 
 
   Future _updateTable(int table_id ) async {
-    var get_response = await http.put(Utils.restURL + "tables/$table_id", body: { 'IsBooked': 'true'});
+    var get_response = await http.put(Utils.restURL + "tables/$table_id", headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'}, body: { 'IsBooked': 'true'});
     print (get_response.statusCode.toString());
   }
 
   Future _updateItems(int table_id , int ItemID , double Qty) async {
-    var get_response = await http.post(Utils.restURL + "tables_items", body: { 'TableID': table_id , 'ItemID': ItemID , 'Qty': Qty });
+    var get_response = await http.post(Utils.restURL + "tables_items",headers: {'Authorization': Utils.BasicAuth + 'jPkhIk0ltylIp5xuHpWPf6LsHjfbxhw9huyfCE=6LsHjfbxhw9huyfCE'}, body: { 'TableID': table_id , 'ItemID': ItemID , 'Qty': Qty });
     print (get_response.statusCode.toString());
   }
 
